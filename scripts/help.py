@@ -1,276 +1,189 @@
 import os
-import importlib
+
+PREFIX = ghost.command_prefix
 
 NATIVE_COMMANDS = {
     "General": {
         "emoji": "📖",
         "commands": {
-            ".help": "A list of all categories",
-            ".ping": "Check the bot's latency",
-            ".search [query] [page]": "Search for commands",
+            f"{PREFIX}help": "A list of all categories",
+            f"{PREFIX}ping": "Check the bot's latency",
+            f"{PREFIX}search [query] [page]": "Search for commands",
         }
     },
     "Account": {
         "emoji": "👤",
         "commands": {
-            ".account": "Account commands",
-            ".backups": "List your backups",
-            ".backup create/delete/restore/view": "Backup management",
-            ".hypesquad [house]": "Change your hypesquad",
-            ".status [status]": "Change your online status",
-            ".customstatus [status]": "Change your custom status",
-            ".clearstatus": "Clear your custom status",
-            ".playing [status]": "Set a playing status",
-            ".streaming [status]": "Set a streaming status",
-            ".nickname [name]": "Change your server nickname",
-            ".clearnickname": "Clear your nickname",
-            ".discordtheme [theme]": "Change Discord theme",
-            ".yoinkrpc [user]": "Steal someone's rich presence",
+            f"{PREFIX}account": "Account commands",
+            f"{PREFIX}backups": "List your backups",
+            f"{PREFIX}backup": "Backup management",
+            f"{PREFIX}hypesquad [house]": "Change your hypesquad",
+            f"{PREFIX}status [status]": "Change your online status",
+            f"{PREFIX}customstatus [status]": "Change your custom status",
+            f"{PREFIX}clearstatus": "Clear your custom status",
+            f"{PREFIX}playing [status]": "Set a playing status",
+            f"{PREFIX}streaming [status]": "Set a streaming status",
+            f"{PREFIX}nickname [name]": "Change your server nickname",
+            f"{PREFIX}clearnickname": "Clear your nickname",
+            f"{PREFIX}discordtheme [theme]": "Change Discord theme",
+            f"{PREFIX}yoinkrpc [user]": "Steal someone's rich presence",
         }
     },
     "Fun": {
         "emoji": "🎉",
         "commands": {
-            ".rickroll": "Never gonna give you up",
-            ".coinflip": "Flip a coin",
-            ".iq [user]": "Get the IQ of a user",
-            ".howgay [user]": "Get the gayness of a user",
-            ".howblack [user]": "Get the blackness of a user",
-            ".pp [user]": "Get the pp size",
-            ".rps": "Play rock paper scissors",
-            ".slots": "Play a slot machine",
-            ".encodemorsecode [text]": "Encode text to morse code",
-            ".decodemorsecode [morse]": "Decode morse code",
-            ".blocksend [user] [msg]": "Send message to blocked user",
-            ".randomdata [type]": "Generate random data",
-            ".kanye": "Random Kanye quote",
-            ".socialcredit [user]": "Social credit score",
-            ".dice [sides]": "Roll a dice",
-            ".rainbow [text]": "Create rainbow text",
-            ".rainbowreact [msg id]": "Rainbow reaction",
-            ".dox [user]": "Dox a user (fake)",
-            ".meme": "Get a random meme",
-            ".dadjoke": "Get a dad joke",
-            ".insult": "Get a random insult",
-            ".compliment [user]": "Get a random compliment",
-            ".catfact": "Get a random cat fact",
-            ".yomomma": "Get a yo momma joke",
-            ".8ball [question]": "Ask the magic 8ball",
-            ".fakenitro": "Fake a nitro gift",
-            ".hyperlink [link] [text]": "Create a hyperlink",
-            ".aura [user]": "Check a user's aura",
-            ".gyatt [user]": "Check if they've got GYATTT",
-            ".playsound [url]": "Play a 5 second sound",
-        }
-    },
-    "Image": {
-        "emoji": "🖼️",
-        "commands": {
-            ".gato": "Get a random cat picture",
-            ".doggo": "Get a random dog picture",
-            ".bird": "Get a random bird picture",
-            ".fox": "Get a random fox picture",
-            ".minion": "Get a random minion meme",
-            ".achievement [icon] [text]": "Minecraft achievement",
-            ".challenge [icon] [text]": "Minecraft challenge",
-            ".discordmessage [user] [msg]": "Fake Discord message",
-            ".searchimage [query]": "Google image search",
-        }
-    },
-    "Info": {
-        "emoji": "ℹ️",
-        "commands": {
-            ".iplookup [ip]": "Look up an IP address",
-            ".userinfo [user]": "Get user information",
-            ".serverinfo": "Get server information",
-            ".servericon": "Get the server icon",
-            ".webhookinfo [url]": "Get webhook information",
-            ".mutualservers [user]": "List mutual servers",
-            ".avatar [user]": "Get a user's avatar",
-            ".tickets": "List all tickets",
-            ".hiddenchannels": "List all hidden channels",
-            ".crypto [coin]": "Cryptocurrency data",
-            ".bitcoin / .ethereum / .tether / .dogecoin": "Quick crypto prices",
-            ".timestamp": "Create Discord timestamps",
-        }
-    },
-    "Mod": {
-        "emoji": "🛡️",
-        "commands": {
-            ".clear [amount]": "Clear messages",
-            ".dmpurge [user]": "Purge DMs",
-            ".purgechat": "Purge chat",
-            ".dumpchat": "Export chat history",
-            ".firstmessage": "Get first message in channel",
-            ".lock [channel]": "Lock a channel",
-            ".unlock [channel]": "Unlock a channel",
-            ".banlist": "List bans",
-            ".ban [user]": "Ban a user",
-            ".unban [user]": "Unban a user",
-            ".kick [user]": "Kick a user",
-            ".mute [user]": "Mute a user",
-            ".unmute [user]": "Unmute a user",
-            ".poll [question]": "Create a poll",
-            ".discordpoll": "Create a Discord poll",
+            f"{PREFIX}rickroll": "Never gonna give you up",
+            f"{PREFIX}coinflip": "Flip a coin",
+            f"{PREFIX}iq [user]": "Get the IQ of a user",
+            f"{PREFIX}howgay [user]": "Get the gayness of a user",
+            f"{PREFIX}pp [user]": "Get the pp size",
+            f"{PREFIX}rps": "Play rock paper scissors",
+            f"{PREFIX}slots": "Play a slot machine",
+            f"{PREFIX}encodemorsecode [text]": "Encode text to morse code",
+            f"{PREFIX}blocksend [user] [msg]": "Send message to blocked user",
+            f"{PREFIX}randomdata [type]": "Generate random data",
+            f"{PREFIX}kanye": "Random Kanye quote",
+            f"{PREFIX}socialcredit [user]": "Social credit score",
+            f"{PREFIX}dice [sides]": "Roll a dice",
+            f"{PREFIX}rainbow [text]": "Create rainbow text",
+            f"{PREFIX}rainbowreact [msg id]": "Rainbow reaction",
+            f"{PREFIX}dox [user]": "Dox a user (fake)",
+            f"{PREFIX}meme": "Get a random meme",
+            f"{PREFIX}dadjoke": "Get a dad joke",
+            f"{PREFIX}insult": "Get a random insult",
+            f"{PREFIX}compliment [user]": "Get a random compliment",
+            f"{PREFIX}catfact": "Get a random cat fact",
+            f"{PREFIX}yomomma": "Get a yo momma joke",
+            f"{PREFIX}8ball [question]": "Ask the magic 8ball",
+            f"{PREFIX}fakenitro": "Fake a nitro gift",
+            f"{PREFIX}hyperlink [link] [text]": "Create a hyperlink",
+            f"{PREFIX}aura [user]": "Check a user's aura",
+            f"{PREFIX}gyatt [user]": "Check if they've got GYATTT",
+            f"{PREFIX}playsound [url]": "Play a 5 second sound",
         }
     },
     "Text": {
         "emoji": "✏️",
         "commands": {
-            ".shrug": "Shrug your arms",
-            ".tableflip": "Flip the table",
-            ".unflip": "Put the table back",
-            ".lmgtfy [search]": "Let me Google that for you",
-            ".blank": "Send a blank message",
-            ".fakepurge": "Flood chat with blank messages",
-            ".ascii [text]": "Create ASCII text art",
-            ".aesthetic [text]": "Make text aesthetic",
-            ".chatbypass [text]": "Bypass chat filters",
-            ".regional [text]": "Text out of emojis",
-            ".randomcase [text]": "Random case text",
-            ".animate [text]": "Animate text",
-            ".cembed [title] [desc] [footer] [colour]": "Custom embed builder",
-            ".passwordgen [length]": "Generate a password",
-            ".codeblock [lang] [code]": "Create a codeblock",
-            ".json / .python / .js / .html / .css": "Language codeblocks",
-            ".java / .c / .cpp / .php / .lua": "More codeblocks",
-            ".reverse [text]": "Reverse your text",
-        }
-    },
-    "Theming": {
-        "emoji": "🎨",
-        "commands": {
-            ".themes [page]": "List all themes",
-            ".theme create/delete/set": "Theme management",
-            ".theme title/colour/footer/image/style": "Edit theme properties",
-            ".imagemode": "Set theme to image style",
-            ".textmode": "Set theme to codeblock style",
-            ".embedmode": "Set theme to embed style",
+            f"{PREFIX}shrug": "Shrug your arms",
+            f"{PREFIX}tableflip": "Flip the table",
+            f"{PREFIX}unflip": "Put the table back",
+            f"{PREFIX}lmgtfy [search]": "Let me Google that for you",
+            f"{PREFIX}blank": "Send a blank message",
+            f"{PREFIX}fakepurge": "Flood chat with blank messages",
+            f"{PREFIX}ascii [text]": "Create ASCII text art",
+            f"{PREFIX}aesthetic [text]": "Make text aesthetic",
+            f"{PREFIX}chatbypass [text]": "Bypass chat filters",
+            f"{PREFIX}regional [text]": "Text out of emojis",
+            f"{PREFIX}randomcase [text]": "Random case text",
+            f"{PREFIX}animate [text]": "Animate text",
+            f"{PREFIX}cembed": "Custom embed builder",
+            f"{PREFIX}passwordgen [length]": "Generate a password",
+            f"{PREFIX}codeblock [lang] [code]": "Create a codeblock",
+            f"{PREFIX}json / python / js / html / css": "Language codeblocks",
+            f"{PREFIX}java / c / cpp / php / lua": "More codeblocks",
+            f"{PREFIX}reverse [text]": "Reverse your text",
         }
     },
     "Util": {
         "emoji": "🧰",
         "commands": {
-            ".config": "View config (redacted)",
-            ".config set [key] [value]": "Set a config value",
-            ".restart": "Restart the bot",
-            ".quit": "Quit the bot",
-            ".settings": "View bot settings",
-            ".prefix [prefix]": "Change command prefix",
-            ".clearcache": "Clear the cache",
-            ".richpresence": "Toggle rich presence",
-            ".resetrichpresence": "Reset RPC to defaults",
-            ".specs": "View computer specs",
-            ".sessionspoofer [device]": "Spoof session device",
-            ".uptime": "View bot uptime",
-            ".latency": "Check bot latency",
-            ".allcmds": "Export all commands to file",
-            ".clearconsole": "Clear the console",
-            ".commandhistory": "Command usage history",
-            ".telemetry": "Toggle telemetry",
-            ".telemetryinfo": "View telemetry info",
-        }
-    },
-    "Sniper": {
-        "emoji": "🎯",
-        "commands": {
-            ".snipers": "List all snipers",
-            ".sniperstatus [sniper]": "Check sniper status",
-            ".nitrosniper [on/off]": "Toggle Nitro sniper",
-            ".privnotesniper [on/off]": "Toggle Privnote sniper",
-            ".ignoreinvalidcodes [sniper]": "Toggle invalid code handling",
-            ".webhooksetup": "Setup snipe webhooks",
-        }
-    },
-    "Abuse": {
-        "emoji": "⚠️",
-        "commands": {
-            ".spam [amount] [msg]": "Spam a channel",
-            ".servernuke": "Nuke a server",
-            ".channelflood [name]": "Flood guild with channels",
-            ".channelspam [amount] [msg]": "Flood a channel",
-            ".channelping [user] [amount]": "Ping user in all channels",
-            ".massping": "Ping every user in server",
-            ".pollspam": "Flood with polls",
-        }
-    },
-    "NSFW": {
-        "emoji": "🔞",
-        "commands": {
-            ".hentai": "Random hentai",
-            ".thighs": "Random thigh pic",
-            ".ass": "Random ass pic",
-            ".boobs": "Random boobs pic",
-            ".pussy": "Random pussy pic",
-            ".porn": "Random porn",
-            ".neko": "Random neko pic",
+            f"{PREFIX}config": "View config (redacted)",
+            f"{PREFIX}config set [key] [value]": "Set a config value",
+            f"{PREFIX}restart": "Restart the bot",
+            f"{PREFIX}quit": "Quit the bot",
+            f"{PREFIX}settings": "View bot settings",
+            f"{PREFIX}prefix [prefix]": "Change command prefix",
+            f"{PREFIX}clearcache": "Clear the cache",
+            f"{PREFIX}richpresence": "Toggle rich presence",
+            f"{PREFIX}resetrichpresence": "Reset RPC to defaults",
+            f"{PREFIX}specs": "View computer specs",
+            f"{PREFIX}sessionspoofer [device]": "Spoof session device",
+            f"{PREFIX}uptime": "View bot uptime",
+            f"{PREFIX}latency": "Check bot latency",
+            f"{PREFIX}allcmds": "Export all commands to file",
+            f"{PREFIX}clearconsole": "Clear the console",
+            f"{PREFIX}commandhistory": "Command usage history",
+            f"{PREFIX}telemetry": "Toggle telemetry",
         }
     },
 }
 
 SCRIPT_CATEGORIES = {
-    "Script Utility": {
-        "emoji": "🔧",
+    "Script Games": {
+        "emoji": "🎮",
         "commands": {
-            ".autostatus add/remove/list/start/stop": "Rotate custom statuses on a timer",
-            ".statuslist": "Quick alias for status list",
-            ".remind [time] [msg]": "Set a reminder that DMs you after a delay",
-            ".reminders": "View your pending reminders",
-            ".logchannel #chan": "Start logging a channel to file",
-            ".logstop #chan": "Stop logging a channel",
-            ".logstatus": "Show logged channels",
-            ".mystats": "View your message statistics",
-            ".serverstats": "View server-wide statistics",
-            ".pinglog": "Show last 10 pings you received",
-            ".pingclear": "Clear ping log",
-            ".autonick [names]": "Rotate nicknames on a timer",
-            ".autonick stop": "Stop nickname rotation",
-            ".dms": "Show last 10 logged DMs",
-            ".dmsearch [query]": "Search your DM log",
-            ".dmclear": "Clear DM log",
+            f"{PREFIX}adventure": "Start a dungeon adventure",
+            f"{PREFIX}choice [1-3]": "Make a choice in adventure",
+            f"{PREFIX}numbergame [easy|hard]": "Number guessing game",
+            f"{PREFIX}num [number]": "Guess the number",
+            f"{PREFIX}wordguess": "Start a hangman word game",
+            f"{PREFIX}guess [letter]": "Guess a letter",
+            f"{PREFIX}ttt @user": "Start Tic-Tac-Toe",
+            f"{PREFIX}ttt [1-9]": "Place your mark",
+            f"{PREFIX}trivia": "Play a trivia question",
+            f"{PREFIX}triviascore": "View trivia leaderboard",
         }
     },
     "Script Fun": {
         "emoji": "🎲",
         "commands": {
-            ".fortune": "Get a random fortune told",
-            ".trivia": "Play a trivia question",
-            ".triviascore": "View trivia leaderboard",
-            ".complimentbomb @user": "Send 3 compliments to someone",
+            f"{PREFIX}fortune": "Get a random fortune told",
+            f"{PREFIX}mock [text]": "mOcKiFy TeXt (spongebob case)",
+            f"{PREFIX}mockify [text]": "Same as mock",
+            f"{PREFIX}autocorrect [text]": "Correct words to food names",
+            f"{PREFIX}ghostping @user": "Ghost ping that auto-deletes",
+            f"{PREFIX}typingtroll @user": "Type for 10-30s then say nothing",
+            f"{PREFIX}complimentbomb @user": "Send 3 compliments to someone",
         }
     },
-    "Script Games": {
-        "emoji": "🎮",
+    "Script Utility": {
+        "emoji": "🔧",
         "commands": {
-            ".ttt @user": "Play Tic-Tac-Toe",
-            ".ttt [1-9]": "Place your mark on the board",
-            ".wordguess": "Start a hangman word game",
-            ".guess [letter]": "Guess a letter",
-            ".numbergame [easy/hard]": "Number guessing game",
-            ".num [number]": "Guess the number",
-            ".adventure": "Start a dungeon adventure",
-            ".choice [1-3]": "Make a choice in adventure",
+            f"{PREFIX}autostatus": "Rotate custom statuses on a timer",
+            f"{PREFIX}statuslist": "Quick alias for status list",
+            f"{PREFIX}autonick [names]": "Rotate nicknames on a timer",
+            f"{PREFIX}remind [time] [msg]": "Set a reminder that DMs you",
+            f"{PREFIX}reminders": "View your pending reminders",
         }
     },
-    "Script Prank": {
-        "emoji": "😈",
+    "Script Logging": {
+        "emoji": "📁",
         "commands": {
-            ".mock [text]": "mOcKiFy TeXt (spongebob case)",
-            ".ghostping @user": "Ghost ping that auto-deletes",
-            ".typingtroll @user": "Type for 10-30s then say nothing",
-            ".autocorrect [text]": "Correct words to food names",
+            f"{PREFIX}dms": "Show last 10 logged DMs",
+            f"{PREFIX}dmsearch [query]": "Search your DM log",
+            f"{PREFIX}dmclear": "Clear DM log",
+            f"{PREFIX}pinglog": "Show last 10 pings you received",
+            f"{PREFIX}pingclear": "Clear ping log",
+            f"{PREFIX}logchannel #chan": "Start logging a channel",
+            f"{PREFIX}logstop #chan": "Stop logging a channel",
+            f"{PREFIX}logstatus": "Show logged channels",
+            f"{PREFIX}mystats": "View your message statistics",
+            f"{PREFIX}serverstats": "View server-wide statistics",
+        }
+    },
+    "Script Help": {
+        "emoji": "📚",
+        "commands": {
+            f"{PREFIX}shelp [page]": "Show help for all command categories",
+            f"{PREFIX}shelprange [start]-[end]": "Show multiple help pages",
+            f"{PREFIX}scmds": "List all script commands",
+            f"{PREFIX}ncmds": "List all native Ghost commands",
+            f"{PREFIX}scripts": "List all loaded script files",
+            f"{PREFIX}cmds [query]": "Search all commands",
+            f"{PREFIX}allhelp": "Overview of all categories",
         }
     },
 }
 
 
 def get_all_categories():
-    all_cats = {}
+    cats = {}
     for name, data in SCRIPT_CATEGORIES.items():
-        all_cats[name] = data
+        cats[name] = data
     for name, data in NATIVE_COMMANDS.items():
-        all_cats[name] = data
-    return all_cats
+        cats[name] = data
+    return cats
 
 
 def get_dynamic_scripts():
@@ -278,83 +191,61 @@ def get_dynamic_scripts():
         scripts_path = files.get_scripts_path()
         if not scripts_path or not os.path.isdir(scripts_path):
             return []
-        scripts = [f[:-3] for f in os.listdir(scripts_path) if f.endswith(".py")]
-        scripts.sort()
+        scripts = sorted(f[:-3] for f in os.listdir(scripts_path) if f.endswith(".py"))
         return scripts
     except Exception:
         return []
 
 
-@ghost.command(name="shelp", description="Show help for all commands. Usage: .shelp [page]", usage="[page]")
-async def shelp(ctx, page: int = 1):
-    all_cats = get_all_categories()
-    categories = list(all_cats.items())
-    total = len(categories)
+def _render_category(name, data):
+    lines = [f"{data['emoji']} **{name}**\n"]
+    for cmd, desc in data["commands"].items():
+        lines.append(f"`{cmd}` — {desc}")
+    return "\n".join(lines)
 
+
+@ghost.command(name="shelp", description="Show help for all commands.", usage="[page]")
+async def shelp(ctx, page: int = 1):
+    categories = list(get_all_categories().items())
+    total = len(categories)
     if page < 1 or page > total:
         page = 1
 
-    cat_name, cat_data = categories[page - 1]
+    name, data = categories[page - 1]
+    nav = "**Navigate:** " + "  ".join(f"`{i}` {d['emoji']}" for i, (_, d) in enumerate(categories, 1))
 
-    lines = [f"{cat_data['emoji']} **{cat_name}**\n"]
-    for cmd, desc in cat_data["commands"].items():
-        lines.append(f"`{cmd}` — {desc}")
-
-    lines.append(f"\n*Page {page}/{total}*")
-
-    nav = "**Navigate:** "
-    for i, (name, data) in enumerate(categories, 1):
-        nav += f"`{i}` {data['emoji']}  "
-
-    await ctx.send(f"{''.join(lines)}\n\n{nav}")
+    await ctx.send(f"{_render_category(name, data)}\n\n*Page {page}/{total}*\n\n{nav}")
 
 
-@ghost.command(name="shelprange", description="Show multiple help pages. Usage: .shelprange [start]-[end]", usage="[start]-[end]")
+@ghost.command(name="shelprange", description="Show multiple help pages.", usage="[start]-[end]")
 async def shelprange(ctx, pages: str = None):
     if not pages:
         await shelp(ctx, 1)
         return
 
-    all_cats = get_all_categories()
-    categories = list(all_cats.items())
+    categories = list(get_all_categories().items())
     total = len(categories)
 
     try:
         if "-" in pages:
-            parts = pages.split("-")
-            start = int(parts[0])
-            end = int(parts[1])
+            start, end = (int(x) for x in pages.split("-"))
         else:
-            start = int(pages)
-            end = start
+            start = end = int(pages)
     except ValueError:
-        await ctx.send("Usage: `.shelprange 1-3` or `.shelprange 5`")
+        await ctx.send(f"Usage: `{PREFIX}shelprange 1-3` or `{PREFIX}shelprange 5`")
         return
 
     start = max(1, start)
     end = min(total, end)
-
     if start > end:
         start, end = end, start
 
-    all_lines = []
-    for i in range(start - 1, end):
-        cat_name, cat_data = categories[i]
-        page_lines = [f"{cat_data['emoji']} **{cat_name}**\n"]
-        for cmd, desc in cat_data["commands"].items():
-            page_lines.append(f"`{cmd}` — {desc}")
-        page_lines.append("")
-        all_lines.append("\n".join(page_lines))
+    result = "\n\n---\n\n".join(_render_category(n, d) for n, d in categories[start - 1:end])
+    result += f"\n\n*Showing pages {start}-{end} of {total}*"
 
-    result = "\n---\n".join(all_lines)
-    result += f"\n*Showing pages {start}-{end} of {total}*"
-
-    nav = "**Navigate:** "
-    for i, (name, data) in enumerate(categories, 1):
-        nav += f"`{i}` {data['emoji']}  "
-
+    nav = "**Navigate:** " + "  ".join(f"`{i}` {d['emoji']}" for i, (_, d) in enumerate(categories, 1))
     if len(result) > 1900:
-        result = result[:1850] + "\n\n*... truncated, use .shelp [page] for individual pages*"
+        result = result[:1850] + "\n\n*... truncated, use shelp [page] for individual pages*"
 
     await ctx.send(f"{result}\n\n{nav}")
 
@@ -362,9 +253,9 @@ async def shelprange(ctx, pages: str = None):
 @ghost.command(name="scmds", description="List all script commands.", usage="")
 async def scmds(ctx):
     lines = ["**All Script Commands:**\n"]
-    for cat_name, cat_data in SCRIPT_CATEGORIES.items():
-        lines.append(f"{cat_data['emoji']} **{cat_name}**")
-        for cmd in cat_data["commands"]:
+    for name, data in SCRIPT_CATEGORIES.items():
+        lines.append(f"{data['emoji']} **{name}**")
+        for cmd in data["commands"]:
             lines.append(f"  `{cmd}`")
         lines.append("")
     await ctx.send("\n".join(lines))
@@ -373,9 +264,9 @@ async def scmds(ctx):
 @ghost.command(name="ncmds", description="List all native Ghost commands.", usage="")
 async def ncmds(ctx):
     lines = ["**All Native Ghost Commands:**\n"]
-    for cat_name, cat_data in NATIVE_COMMANDS.items():
-        lines.append(f"{cat_data['emoji']} **{cat_name}**")
-        for cmd in cat_data["commands"]:
+    for name, data in NATIVE_COMMANDS.items():
+        lines.append(f"{data['emoji']} **{name}**")
+        for cmd in data["commands"]:
             lines.append(f"  `{cmd}`")
         lines.append("")
     await ctx.send("\n".join(lines))
@@ -416,40 +307,33 @@ async def cmds(ctx, *, query=None):
         await ctx.send(f"No commands matching `{query}`.")
         return
 
-    if len(results) > 15:
-        results = results[:15]
-        truncated = True
-    else:
-        truncated = False
+    truncated = len(results) > 15
+    results = results[:15]
 
     lines = [f"**Results for `{query}` ({len(results)} shown):**\n"]
-    for emoji, cmd, desc, source in lines_label := results:
+    for emoji, cmd, desc, source in results:
         tag = " `[S]`" if source == "Script" else ""
         lines.append(f"{emoji} `{cmd}` — {desc}{tag}")
 
     if truncated:
-        lines.append(f"\n*... more results. Refine your search.*")
+        lines.append("\n*... more results. Refine your search.*")
 
     await ctx.send("\n".join(lines))
 
 
 @ghost.command(name="allhelp", description="Show overview of all command categories.", usage="")
 async def allhelp(ctx):
-    all_cats = get_all_categories()
-    categories = list(all_cats.items())
-    total = len(categories)
-
+    categories = list(get_all_categories().items())
     lines = ["**Ghost + Scripts — All Categories**\n"]
-    for i, (cat_name, cat_data) in enumerate(categories, 1):
-        count = len(cat_data["commands"])
-        lines.append(f"{cat_data['emoji']} `{i}` **{cat_name}** ({count} cmds)")
+    for i, (name, data) in enumerate(categories, 1):
+        lines.append(f"{data['emoji']} `{i}` **{name}** ({len(data['commands'])} cmds)")
 
     script_names = get_dynamic_scripts()
     lines.append(f"\n**Scripts loaded:** {len(script_names)}")
     if script_names:
         lines.append(", ".join(f"`{s}`" for s in script_names))
 
-    lines.append(f"\n*Use `.shelp [page]` or `.shelprange [start]-[end]` for details*")
-    lines.append(f"*Use `.cmds [query]` to search all commands*")
+    lines.append(f"\n*Use `{PREFIX}shelp [page]` or `{PREFIX}shelprange [start]-[end]` for details*")
+    lines.append(f"*Use `{PREFIX}cmds [query]` to search all commands*")
 
     await ctx.send("\n".join(lines))
